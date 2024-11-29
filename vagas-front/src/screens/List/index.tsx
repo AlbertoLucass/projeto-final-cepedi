@@ -5,10 +5,12 @@ import { Wrapper,Container, ListContainer, TextVagas } from './styles';
 import BGTop from '../../assets/BGTop.png';
 import Logo from '../../components/Logo';
 import VagaCard from '../../components/VagaCard';
+import { useAuth } from '../../contexts/AuthContext';
+import { Button } from 'react-native';
 
 
 export default function List() {
-
+  const { signOut } = useAuth();
   const [vagas, setVagas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

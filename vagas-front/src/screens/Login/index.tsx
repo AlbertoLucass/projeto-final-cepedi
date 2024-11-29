@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Wrapper,Container, Form, TextContainer, TextBlack, TextLink, TextLinkContainer } from './styles';
 
 import api from '../../services/api';
+import { useAuth } from '../../contexts/AuthContext';
 
 import BGTop from '../../assets/BGTop.png';
 import Logo from '../../components/Logo';
@@ -11,9 +12,9 @@ import Input from '../../components/Input';
 import { Button } from '../../components/Button';
 
 export default function Login({ navigation }) {
-
-const [email, setEmail] = useState('');
-const [senha, setSenha] = useState('');
+    const { signIn } = useAuth();
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
 
 const handleLogin = async () => {
     try{
@@ -23,6 +24,7 @@ const handleLogin = async () => {
         const user = users.find(u => u.email === email && u.senha === senha);
 
         if(user){
+            signIn(email);
             navigation.navigate('Auth', {screen: 'home'})
         }else{
             console.log('Login falhou.')
