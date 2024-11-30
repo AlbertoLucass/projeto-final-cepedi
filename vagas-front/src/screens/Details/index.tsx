@@ -34,7 +34,7 @@ const Details: React.FC<DetailsProps> = ({ route, navigation }) => {
         const data = response.data.job;
         setVaga({
           id: data.id,
-          title: data.titulo, // Fixed to match your field name
+          title: data.titulo,
           date: data.dataCadastro,
           description: data.descricao,
           phone: data.telefone,
@@ -42,10 +42,10 @@ const Details: React.FC<DetailsProps> = ({ route, navigation }) => {
           status: data.status,
         });
       } else {
-        setVaga(null); // Explicitly set to null if no job is found
+        setVaga(null);
       }
     } catch (error) {
-      setVaga(null); // Set to null on error
+      setVaga(null);
     }
   };
 

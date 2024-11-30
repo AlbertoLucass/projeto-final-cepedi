@@ -35,6 +35,7 @@ async function update(id, { nome, email, senha }) {
 
 
 
+
 module.exports = {
   findAll,
   findById,

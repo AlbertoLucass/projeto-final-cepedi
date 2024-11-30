@@ -43,14 +43,21 @@ router.post('/', async (req, res) => {
 
 
 // Update a user
-router.put('/:id', (req, res) => {
-  const user = usuarioRepository.update(req.params.id, req.body);
-  if (user) {
-    res.json({ user });
-  } else {
-    res.status(404).json({ error: 'User not found' });
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedUser = await usuarioRepository.update(req.params.id, req.body);
+    
+    if (updatedUser) {
+      res.json({ user: updatedUser });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // Delete a user
 router.delete('/:id', (req, res) => {
