@@ -8,7 +8,7 @@ import VagaCard from "../../components/VagaCard";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface Vaga {
-  id: number;
+  id: string;
   titulo: string;
   descricao: string;
   dataCadastro: string;
@@ -61,6 +61,7 @@ export default function List() {
                   title={item.titulo}
                   dataCreated={item.dataCadastro}
                   company={item.empresa}
+                  status={item.status}
                 />
               )}
               showsVerticalScrollIndicator={true}

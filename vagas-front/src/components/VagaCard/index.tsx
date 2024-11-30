@@ -11,6 +11,7 @@ interface VagaCardProps {
   title: string;
   dataCreated: string;
   company: string;
+  status: string;
 }
 
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { Feather } from "@expo/vector-icons";
+import { Linking } from "react-native";
 import {
   Wrapper,
   Container,
@@ -15,12 +16,11 @@ import {
 import Logo from "../../components/Logo";
 import theme from "../../theme";
 import { Button } from "../../components/Button";
-import { NativeStackScreenProps } from "@react-navigation/native-stack"; // Import this type
-import { RootStackParamList } from "../../utils/Types"; // Import your root stack params
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../utils/Types";
 
 import { VagaProps } from "../../utils/Types";
 
-// Use NativeStackScreenProps to type the props correctly
 type DetailsProps = NativeStackScreenProps<RootStackParamList, "Details">;
 
 const Details: React.FC<DetailsProps> = ({ route, navigation }) => {
@@ -30,17 +30,22 @@ const Details: React.FC<DetailsProps> = ({ route, navigation }) => {
   const fetchVaga = async (): Promise<void> => {
     try {
       const response = await api.get(`api/vagas/${id}`);
-      const data = response.data;
-      setVaga({
-        id: data.id,
-        title: data.title,
-        date: data.dataCadastro,
-        description: data.descricao,
-        phone: data.telefone,
-        company: data.empresa,
-      });
+      if (response.data && response.data.job) {
+        const data = response.data.job;
+        setVaga({
+          id: data.id,
+          title: data.titulo, // Fixed to match your field name
+          date: data.dataCadastro,
+          description: data.descricao,
+          phone: data.telefone,
+          company: data.empresa,
+          status: data.status,
+        });
+      } else {
+        setVaga(null); // Explicitly set to null if no job is found
+      }
     } catch (error) {
-      console.log(error);
+      setVaga(null); // Set to null on error
     }
   };
 
@@ -60,21 +65,29 @@ const Details: React.FC<DetailsProps> = ({ route, navigation }) => {
         <Logo />
       </Header>
 
-      {vaga ? (
+      {vaga && (
         <Container>
           <ContentContainer>
             <Title>{vaga.title}</Title>
             <Description>{vaga.description}</Description>
           </ContentContainer>
-
-          <Button
-            title="Entrar em contato"
-            noSpacing={true}
-            variant="primary"
-          />
+          {vaga.status === "em aberto" && vaga.phone ? (
+            <Button
+              title="Entrar em contato"
+              noSpacing={true}
+              variant="primary"
+              onPress={() =>
+                Linking.openURL(
+                  `https://wa.me/${vaga.phone.replace(/[- ]/g, "")}`
+                )
+              }
+            />
+          ) : (
+            <Title style={{ marginTop: 15 }}>
+              Vaga não disponível no momento
+            </Title>
+          )}
         </Container>
-      ) : (
-        <Title>Vaga não foi encontrada</Title>
       )}
     </Wrapper>
   );
