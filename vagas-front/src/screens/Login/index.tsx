@@ -23,7 +23,10 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const response = await api.get("api/usuarios");
       const users = response.data.usuarios;
@@ -39,6 +42,8 @@ export default function Login({ navigation }) {
       }
     } catch (error) {
       console.log("Error during login:", error);
+    } finally {
+      setLoading(false);
     }
   };
 

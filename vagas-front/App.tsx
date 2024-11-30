@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+
 import theme from './src/theme';
 
 import Login from './src/screens/Login';
@@ -12,6 +13,7 @@ import FormScreen  from './src/screens/Form';
 import List  from './src/screens/List';
 import Profile  from './src/screens/Profile';
 import Details  from './src/screens/Details';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -60,15 +62,17 @@ function Auth(){
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="FormScreen" component={FormScreen} />
-          <Stack.Screen name="Auth" component={Auth} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <AuthProvider> {/* Wrap your app with AuthProvider */}
+      <ThemeProvider theme={theme}>
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="FormScreen" component={FormScreen} />
+            <Stack.Screen name="Auth" component={Auth} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

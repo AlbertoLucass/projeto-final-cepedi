@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
 // Get user by id
 router.get('/:id', async (req, res) => {
-  console.log(`Fetching user with ID: ${req.params.id}`); // Debug log
+  console.log(`Buscando usuario pelo id: ${req.params.id}`); // Debug log
   const user = await usuarioRepository.findById(req.params.id);
   console.log(user); // Debug fetched data
   if (user) {
@@ -33,10 +33,10 @@ router.post('/', async (req, res) => {
   try {
     console.log('Request body:', req.body); // Log do corpo da requisição
     const user = await usuarioRepository.create(req.body);
-    console.log('Created user:', user); // Log do usuário criado
+    console.log('Usuario criado:', user); // Log do usuário criado
     res.json({ user });
   } catch (error) {
-    console.error('Error creating user:', error); // Log de erro
+    console.error('Erro ao criar usuario:', error); // Log de erro
     res.status(500).json({ error: 'Internal server error' });
   }
 });
