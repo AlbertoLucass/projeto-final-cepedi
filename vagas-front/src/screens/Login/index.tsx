@@ -30,7 +30,6 @@ export default function Login({ navigation }) {
     try {
       const response = await api.get("api/usuarios");
       const users = response.data.usuarios;
-      console.log("Users fetched:", users);
 
       const user = users.find((u) => u.email === email && u.senha === senha);
 

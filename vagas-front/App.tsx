@@ -62,7 +62,7 @@ function Auth(){
 
 export default function App() {
   return (
-    <AuthProvider> {/* Wrap your app with AuthProvider */}
+    <AuthProvider>
       <ThemeProvider theme={theme}>
         <StatusBar style="auto" />
         <NavigationContainer>

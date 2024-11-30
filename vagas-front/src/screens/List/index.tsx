@@ -17,8 +17,9 @@ export default function List() {
   useEffect(() => {
     const fetchVagas = async () => {
       try {
-        const response = await api.get('/vagas');
-        setVagas(response.data)
+        const response = await api.get('api/vagas');
+        const vagas = response.data.jobs;
+        setVagas(vagas)
       }catch(error){
         console.log(error);
       }finally{
