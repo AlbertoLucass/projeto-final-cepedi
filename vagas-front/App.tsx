@@ -12,7 +12,6 @@ import FormScreen  from './src/screens/Form';
 import List  from './src/screens/List';
 import Profile  from './src/screens/Profile';
 import Details  from './src/screens/Details';
-import { AuthProvider } from './src/contexts/AuthContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -61,7 +60,6 @@ function Auth(){
 
 export default function App() {
   return (
-    <AuthProvider>
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" />
       <NavigationContainer>
@@ -72,6 +70,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
-    </AuthProvider>
   );
 }
