@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { Image } from "react-native";
-import { useState } from "react";
 import {
   Wrapper,
   Container,
@@ -18,17 +18,30 @@ import Logo from "../../components/Logo";
 import Input from "../../components/Input";
 import { Button } from "../../components/Button";
 
-export default function Login({ navigation }) {
-  const { signIn } = useAuth();
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../utils/Types";
 
-  const [loading, setLoading] = useState(false);
+type LoginScreenNavigationProp = NativeStackScreenProps<
+  RootStackParamList,
+  "Login"
+>;
+
+interface User {
+  email: string;
+  senha: string;
+}
+
+const Login: React.FC<LoginScreenNavigationProp> = ({ navigation }) => {
+  const { signIn } = useAuth();
+
+  const [email, setEmail] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await api.get("api/usuarios");
+      const response = await api.get<{ usuarios: User[] }>("api/usuarios");
       const users = response.data.usuarios;
 
       const user = users.find((u) => u.email === email && u.senha === senha);
@@ -64,12 +77,14 @@ export default function Login({ navigation }) {
             placeholder="digite sua senha"
             value={senha}
             onChangeText={setSenha}
+            secureTextEntry
           />
           <Button
             title="Entrar"
             noSpacing={true}
             variant="primary"
             onPress={handleLogin}
+            disabled={loading}
           />
           <TextContainer>
             <TextBlack>Não tem uma conta?</TextBlack>
@@ -83,4 +98,6 @@ export default function Login({ navigation }) {
       </Container>
     </Wrapper>
   );
-}
+};
+
+export default Login;
