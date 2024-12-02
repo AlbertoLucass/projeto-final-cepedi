@@ -6,6 +6,7 @@ import BGTop from "../../assets/BGTop.png";
 import Logo from "../../components/Logo";
 import VagaCard from "../../components/VagaCard";
 import { useAuth } from "../../contexts/AuthContext";
+import { Button } from "../../components/Button";
 
 interface Vaga {
   id: string;
@@ -19,7 +20,7 @@ interface Vaga {
   updatedAt: string;
 }
 
-export default function List() {
+export default function List({ navigation }) {
   const { signOut } = useAuth();
 
   const [vagas, setVagas] = useState<Vaga[]>([]);
@@ -73,6 +74,14 @@ export default function List() {
               )}
             />
           )}
+           <Button
+            style={{backgroundColor:'red',width:100,}}
+            title="SignOut"
+            noSpacing={true}
+            variant="primary"
+            onPress={()=>signOut(navigation)}
+            
+          />
         </ListContainer>
       </Container>
     </Wrapper>
