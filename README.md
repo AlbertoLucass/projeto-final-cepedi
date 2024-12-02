@@ -65,6 +65,9 @@ Abra **dois terminais** e siga os passos abaixo:
 
 Agora o aplicativo estará pronto para ser testado.
 
+> **Observação**: Testamos o aplicativo em dispositivos Android. No entanto, ao testar em dispositivos iOS, tome cuidado, pois a URL pode mudar dependendo do dispositivo.
+
+
 ## Funcionalidades do Projeto
 
 * **30pts**: Conexão com a API de vagas, baseada no conteúdo apresentado pelo professor Jeferson.
